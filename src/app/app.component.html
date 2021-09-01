@@ -1,0 +1,320 @@
+<mat-card class="m-2">
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Minutes">
+        <shadow-box>
+          <span> Every </span>
+          <app-minutes-input></app-minutes-input>
+          <span>
+            minute<ng-container *ngIf="greaterThanOne(minutes.value)"
+              >s</ng-container
+            >
+          </span>
+        </shadow-box>
+      </mat-tab>
+      <mat-tab label="Hourly">
+        <shadow-box>
+          <span> Every </span>
+          <input
+            #hours
+            type="number"
+            [max]="23"
+            [min]="1"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="minmaxOnInput($event)"
+            autocomplete="off"
+          />
+          <span>
+            hour<ng-container *ngIf="greaterThanOne(hours.value)"
+              >s</ng-container
+            >
+            on minute
+          </span>
+          <input
+            #minutes
+            type="number"
+            [max]="59"
+            [min]="0"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="timeOnInput($event)"
+            autocomplete="off"
+          />
+        </shadow-box>
+      </mat-tab>
+      <mat-tab label="Daily">
+        <shadow-box>
+          <span> Every </span>
+          <input
+            #days
+            type="number"
+            [max]="31"
+            [min]="1"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="minmaxOnInput($event)"
+            autocomplete="off"
+          />
+          <span>
+            day<ng-container *ngIf="greaterThanOne(days.value)">s</ng-container>
+            at
+          </span>
+          <input
+            #hours
+            type="number"
+            [max]="23"
+            [min]="0"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="timeOnInput($event)"
+            autocomplete="off"
+          />
+          <span>:</span>
+          <input
+            #minutes
+            type="number"
+            [max]="59"
+            [min]="0"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="timeOnInput($event)"
+            autocomplete="off"
+          />
+        </shadow-box>
+      </mat-tab>
+      <mat-tab label="Weekly">
+        <shadow-box>
+          <div class="w-28 mx-2">
+            <mat-select #weekday class="bg-white rounded" multiple>
+              <mat-select-trigger>
+                {{ getSelectedDays(weekday.value) }}
+              </mat-select-trigger>
+              <mat-option *ngFor="let day of weekDays" [value]="day">{{
+                day
+              }}</mat-option>
+            </mat-select>
+          </div>
+          <span>at</span>
+          <input
+            #hours
+            type="number"
+            [max]="23"
+            [min]="0"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="timeOnInput($event)"
+            autocomplete="off"
+          />
+          <span>:</span>
+          <input
+            #minutes
+            type="number"
+            [max]="59"
+            [min]="0"
+            class="bg-white w-9 rounded mx-2 text-right"
+            (input)="timeOnInput($event)"
+            autocomplete="off"
+          />
+        </shadow-box>
+      </mat-tab>
+      <mat-tab label="Monthly">
+        <mat-radio-group class="flex flex-col w-full">
+          <shadow-box>
+            <mat-radio-button value="1" checked> </mat-radio-button>
+            <span> On the </span>
+            <input
+              #days
+              type="number"
+              [max]="31"
+              [min]="1"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="minmaxOnInput($event)"
+              autocomplete="off"
+            />
+            <span> <ng-container>st</ng-container> day of every </span>
+            <input
+              #months1
+              type="number"
+              [max]="12"
+              [min]="1"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="minmaxOnInput($event)"
+              autocomplete="off"
+            />
+            <span>
+              month<ng-container *ngIf="greaterThanOne(months1.value)"
+                >s</ng-container
+              >
+              at
+            </span>
+            <input
+              #hours
+              type="number"
+              [max]="23"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+            <span>:</span>
+            <input
+              #minutes
+              type="number"
+              [max]="59"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+          </shadow-box>
+          <shadow-box>
+            <mat-radio-button value="2"> </mat-radio-button>
+            <span> On </span>
+            <div class="w-28 mx-2">
+              <mat-select #weekday2 class="bg-white rounded" multiple>
+                <mat-select-trigger>
+                  {{ getSelectedDays(weekday2.value) }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let day of weekDays" [value]="day">{{
+                  day
+                }}</mat-option>
+              </mat-select>
+            </div>
+            <span> of every </span>
+            <input
+              #months2
+              type="number"
+              [max]="12"
+              [min]="1"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="minmaxOnInput($event)"
+              autocomplete="off"
+            />
+            <span>
+              month<ng-container *ngIf="greaterThanOne(months2.value)"
+                >s</ng-container
+              >
+              at
+            </span>
+            <input
+              #hours
+              type="number"
+              [max]="23"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+            <span>:</span>
+            <input
+              #minutes
+              type="number"
+              [max]="59"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+          </shadow-box>
+        </mat-radio-group>
+      </mat-tab>
+      <mat-tab label="Yearly">
+        <mat-radio-group class="flex flex-col w-full">
+          <shadow-box>
+            <mat-radio-button value="1" checked> </mat-radio-button>
+            <div class="w-28 mx-2">
+              <mat-select #monthEl class="bg-white rounded" multiple>
+                <mat-select-trigger>
+                  {{ getSelectedDays(monthEl.value) }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let month of months" [value]="month">{{
+                  month
+                }}</mat-option>
+              </mat-select>
+            </div>
+            <span>on the</span>
+            <input
+              #days
+              type="number"
+              [max]="31"
+              [min]="1"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="minmaxOnInput($event)"
+              autocomplete="off"
+            />
+            <span> <ng-container>st</ng-container> day at </span>
+            <input
+              #hours
+              type="number"
+              [max]="23"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+            <span>:</span>
+            <input
+              #minutes
+              type="number"
+              [max]="59"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+          </shadow-box>
+          <shadow-box>
+            <mat-radio-button value="2"> </mat-radio-button>
+            <span> On </span>
+            <div class="w-28 mx-2">
+              <mat-select #weekday3 class="bg-white rounded" multiple>
+                <mat-select-trigger>
+                  {{ getSelectedDays(weekday3.value) }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let day of weekDays" [value]="day">{{
+                  day
+                }}</mat-option>
+              </mat-select>
+            </div>
+            <span> of </span>
+            <div class="w-28 mx-2">
+              <mat-select #month5 class="bg-white rounded" multiple>
+                <mat-select-trigger>
+                  {{ getSelectedDays(month5.value) }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let month of months" [value]="month">{{
+                  month
+                }}</mat-option>
+              </mat-select>
+            </div>
+            <span> at </span>
+            <input
+              #hours
+              type="number"
+              [max]="23"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+            <span>:</span>
+            <input
+              #minutes
+              type="number"
+              [max]="59"
+              [min]="0"
+              class="bg-white w-9 rounded mx-2 text-right"
+              (input)="timeOnInput($event)"
+              autocomplete="off"
+            />
+          </shadow-box>
+        </mat-radio-group>
+      </mat-tab>
+      <mat-tab label="Advanced">
+        <shadow-box>
+          <span> Cron Expression </span>
+          <input
+            #cron
+            class="bg-white w-32 rounded mx-2 px-2 tracking-wider"
+            autocomplete="off"
+          />
+        </shadow-box>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

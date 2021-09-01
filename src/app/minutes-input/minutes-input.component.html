@@ -1,0 +1,8 @@
+<input
+  type="number"
+  [max]="59"
+  [min]="1"
+  class="bg-white w-9 rounded mx-2 text-right"
+  (input)="Utils.minmaxOnInput($event)"
+  autocomplete="off"
+/>
